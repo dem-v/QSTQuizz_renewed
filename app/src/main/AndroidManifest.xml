@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="vda.home.qstquizz">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- ATTENTION: This intent was auto-generated. Follow instructions at
+              https://g.co/AppIndexing/AndroidStudio to publish your Android app deep links. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- ATTENTION: This data URL was auto-generated. We recommend that you use the HTTP scheme.
+                  TODO: Change the host or pathPrefix as necessary. -->
+                <data
+                    android:host="qstquizz.home.vda"
+                    android:pathPrefix="/main"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FileSelectActivity"
+            android:label="@string/title_activity_file_select"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="vda.home.qstquizz.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TestMainFrameActivity"
+            android:label="@string/title_activity_test_main_frame"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
+    </application>
+
+</manifest>

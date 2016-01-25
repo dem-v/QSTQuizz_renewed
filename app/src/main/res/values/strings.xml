@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">QSTQuizz_2</string>
+    <string name="title_activity_main">QSTQuizz_2_MainActivity</string>
+    <string name="starttest">Начать тест</string>
+    <string name="baseselect">Выбрать файл базы</string>
+    <string name="noFileSelectedMsg">ФАЙЛ НЕ ВЫБРАН!!!</string>
+    <string name="testmodetoggle_on">Режим экзамена</string>
+    <string name="testmodetoggle_off">Режим обучения</string>
+    <string name="exit">Выход</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_file_select">FileSelectActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_test_main_frame">TestMainFrameActivity</string>
+    <string name="textview">TextView</string>
+</resources>

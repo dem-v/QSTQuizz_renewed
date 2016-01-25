@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="vda.home.qstquizz_2.MainActivity">
+
+    <Button
+        android:id="@+id/starttest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:text="@string/starttest" />
+
+    <Button
+        android:id="@+id/baseselect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/testmodetoggle"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/baseselect" />
+
+    <TextView
+        android:id="@+id/noFileSelectedMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/baseselect"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="#ff0000"
+        android:gravity="center"
+        android:text="@string/noFileSelectedMsg"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ToggleButton
+        android:id="@+id/testmodetoggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/exit"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textOff="@string/testmodetoggle_off"
+        android:textOn="@string/testmodetoggle_on" />
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/exit" />
+
+</RelativeLayout>
