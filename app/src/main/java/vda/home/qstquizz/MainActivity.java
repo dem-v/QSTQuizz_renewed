@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(LOG_TAG, "super.onCreated succesfully!");
+        Log.d(LOG_TAG, "super.onCreated successfully!");
         setContentView(R.layout.activity_main);
         Log.d(LOG_TAG, "ContentView set");
 
@@ -42,9 +42,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(LOG_TAG, "File Picker initiating");
                 try {
-                    sendMessage(v);
+                    sendMessage();
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                              try {
                                                  Intent intent = new Intent(MainActivity.this, TestMainFrameActivity.class);
                                                  intent.putExtra("vda.home.qstquizz.PATH", FilePath);
+                                                 intent.putExtra("vda.home.qstquizz.MODE", MainActivity.this.findViewById(R.id.testmodetoggle).isEnabled());
                                                  startActivity(intent);
                                              } catch (Exception e) {
                                                  Log.e(LOG_TAG, e.getMessage());
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Third listener set");
     }
 
-    public void sendMessage(View view) {
+    public void sendMessage() {
         // Создаем объект Intent для вызова новой Activity
         Intent intent = new Intent(MainActivity.this, FileSelectActivity.class);
         // запуск activity
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case ACTIVITY_CHOOSE_FILE: {
                 if (resultCode == RESULT_OK) {
-                    Log.d(LOG_TAG, "FilePath recieved: " + FilePath);
+                    Log.d(LOG_TAG, "FilePath received: " + FilePath);
                     FilePath = data.getStringExtra("vda.home.qstquizz.PATH");
                     final TextView tw = (TextView) this.findViewById(R.id.noFileSelectedMsg);
                     tw.setText(FilePath);

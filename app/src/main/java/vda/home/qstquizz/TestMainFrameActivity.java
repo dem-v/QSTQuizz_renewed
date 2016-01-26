@@ -1,20 +1,28 @@
 package vda.home.qstquizz;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import vda.home.qstquizz.LibGetBaseFromAssets;
 
 public class TestMainFrameActivity extends AppCompatActivity {
 
     String FilePath;
+    Boolean ExamTestMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_main_frame);
         FilePath = getIntent().getStringExtra("vda.home.qstquizz.PATH");
-
+        ExamTestMode = getIntent().getBooleanExtra("vda.home.qstquizz.MODE",false);
+        final ProgressBar ProgressBarPoint = (ProgressBar) this.findViewById(R.id.progressBar);
+        
+        LibGetBaseFromAssets.SingleVariableOfQuestionAndAnswers ThisQuestion =
     }
 
     @Override
