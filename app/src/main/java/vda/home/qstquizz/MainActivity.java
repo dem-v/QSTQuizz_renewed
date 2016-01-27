@@ -1,6 +1,7 @@
 package vda.home.qstquizz;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,12 +12,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     static public String FilePath;
     static public boolean IS_LOADED_FLAG = false;
-    final int ACTIVITY_CHOOSE_FILE = 1;
+    TextView tw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,48 +26,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(LOG_TAG, "ContentView set");
 
-        final Button exit = (Button) this.findViewById(R.id.exit);
-        exit.setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Log.d(LOG_TAG, "Exiting on user request...");
-                                        finish();
-                                    }
-                                }
-        );
+        tw = (TextView) findViewById(R.id.noFileSelectedMsg);
+
+        findViewById(R.id.exit).setOnClickListener(this);
         Log.d(LOG_TAG, "Exit button listener set");
 
-        final Button openFilePicker = (Button) this.findViewById(R.id.baseselect);
-        openFilePicker.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "File Picker initiating");
-                try {
-                    sendMessage();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        findViewById(R.id.baseselect).setOnClickListener(this);
         Log.d(LOG_TAG, "Second listener set");
 
-        final Button startTest = (Button) this.findViewById(R.id.starttest);
-        startTest.setOnClickListener(new OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             Log.d(LOG_TAG, "Starting test...");
-                                             try {
-                                                 Intent intent = new Intent(MainActivity.this, TestMainFrameActivity.class);
-                                                 intent.putExtra("vda.home.qstquizz.PATH", FilePath);
-                                                 intent.putExtra("vda.home.qstquizz.MODE", MainActivity.this.findViewById(R.id.testmodetoggle).isEnabled());
-                                                 startActivity(intent);
-                                             } catch (Exception e) {
-                                                 Log.e(LOG_TAG, e.getMessage());
-                                                 e.printStackTrace();
-                                             }
-                                         }
-                                     }
-        );
+        findViewById(R.id.starttest).setOnClickListener(this);
         Log.d(LOG_TAG, "Third listener set");
     }
 
@@ -79,19 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ACTIVITY_CHOOSE_FILE: {
-                if (resultCode == RESULT_OK) {
-                    Log.d(LOG_TAG, "FilePath received: " + FilePath);
-                    FilePath = data.getStringExtra("vda.home.qstquizz.PATH");
-                    final TextView tw = (TextView) this.findViewById(R.id.noFileSelectedMsg);
-                    tw.setText(FilePath);
-                } else {
-                    Log.d(LOG_TAG, "FilePath not set...");
-                    final TextView tw = (TextView) this.findViewById(R.id.noFileSelectedMsg);
-                    tw.setHighlightColor(0xFF0000);
-                }
-            }
+        if (resultCode == RESULT_OK) {
+            Log.d(LOG_TAG, "FilePath received: " + FilePath);
+            FilePath = data.getStringExtra("vda.home.qstquizz.PATH");
+            tw.setText(FilePath);
+        } else {
+            Log.d(LOG_TAG, "FilePath not set...");
+            tw.setHighlightColor(Color.RED);
         }
     }
 
@@ -120,7 +82,37 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final TextView tw = (TextView) this.findViewById(R.id.noFileSelectedMsg);
         tw.setText(FilePath);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.exit:
+                Log.d(LOG_TAG, "Exiting on user request...");
+                finish();
+                break;
+            case R.id.baseselect:
+                Log.d(LOG_TAG, "File Picker initiating");
+                try {
+                    sendMessage();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.starttest:
+                Log.d(LOG_TAG, "Starting test...");
+                try {
+                    Intent intent = new Intent(MainActivity.this, TestMainFrameActivity.class);
+                    intent.putExtra("vda.home.qstquizz.PATH", FilePath);
+                    intent.putExtra("vda.home.qstquizz.MODE", findViewById(R.id.testmodetoggle).isEnabled());
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 }

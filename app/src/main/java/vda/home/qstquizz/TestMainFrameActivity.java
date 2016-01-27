@@ -7,12 +7,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+
 import vda.home.qstquizz.LibGetBaseFromAssets;
+
+import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionNumberCurrent;
+import static vda.home.qstquizz.LibGetBaseFromAssets.setQuestionNumberTotal;
+import static vda.home.qstquizz.LibGetBaseFromAssets.setTestBase;
 
 public class TestMainFrameActivity extends AppCompatActivity {
 
     String FilePath;
     Boolean ExamTestMode;
+    LibGetBaseFromAssets.SingleVariableOfQuestionAndAnswers ThisQuestion;
+    int[] QuestionNumberArray = new int[200];
+    final ProgressBar ProgressBarPoint = (ProgressBar) findViewById(R.id.progressBar);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +33,36 @@ public class TestMainFrameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_main_frame);
         FilePath = getIntent().getStringExtra("vda.home.qstquizz.PATH");
         ExamTestMode = getIntent().getBooleanExtra("vda.home.qstquizz.MODE",false);
-        final ProgressBar ProgressBarPoint = (ProgressBar) this.findViewById(R.id.progressBar);
-        
-        LibGetBaseFromAssets.SingleVariableOfQuestionAndAnswers ThisQuestion =
+
+        //TODO:Change mode on base of button
+        loadBase();
+        prepareTestVariant();
+
+
+    }
+
+    private void prepareTestVariant() {
+        if (ExamTestMode) {
+            setQuestionNumberTotal(200);
+            int[] QNA = new int[getQuestionNumberCurrent()-1];
+            for (int i=0; i<=QNA.length; i++) {QNA[i]=i+1;}
+            Collections.shuffle(Arrays.asList(QNA));
+            for (int i = 0; i < 200; i++) {
+                QuestionNumberArray[i] = QNA[i];
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+    private void loadBase() {
+        try {
+            setTestBase(FilePath, TestMainFrameActivity.this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

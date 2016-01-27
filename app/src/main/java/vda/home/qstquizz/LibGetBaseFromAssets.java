@@ -15,7 +15,7 @@ public class LibGetBaseFromAssets {
     public static int QuestionNumberTotal =0;
     public static int QuestionNumberCurrent =0;
     private static int QuestionNumberCounter =0;
-    private String temp,strtmp;
+    private static String temp,strtmp;
 
     public class SingleVariableOfQuestionAndAnswers
     {
@@ -24,7 +24,7 @@ public class LibGetBaseFromAssets {
         Boolean[] CorrectAnswer = new Boolean[4];
     }
 
-    public SingleVariableOfQuestionAndAnswers[] TestBase;
+    public static SingleVariableOfQuestionAndAnswers[] TestBase;
 
     public static int getQuestionNumberTotal() {
         return QuestionNumberTotal;
@@ -42,7 +42,7 @@ public class LibGetBaseFromAssets {
         QuestionNumberCurrent = questionNumberCurrent;
     }
 
-    public void setTestBase(String FilePath, Activity activity) throws IOException {
+    public static void setTestBase(String FilePath, Activity activity) throws IOException {
         final AssetManager am = activity.getAssets();
         InputStream inp = am.open(FilePath);
         Scanner scanner = new Scanner(inp);
@@ -111,6 +111,7 @@ public class LibGetBaseFromAssets {
                 TestBase[QuestionNumberCounter].Question = scanner.nextLine();
             }
         }
+        QuestionNumberTotal = QuestionNumberCounter;
     }
 
     public boolean CheckAnswer(int AnswerID)
