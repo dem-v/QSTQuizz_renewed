@@ -47,7 +47,7 @@ public class LibGetBaseFromAssets {
         InputStream inp = am.open(FilePath);
         Scanner scanner = new Scanner(inp);
 
-        temp = scanner.next("/r/n");
+        temp = scanner.next("/r/n"); //TODO:Type mismatch here
         QuestionNumberCounter++;
         TestBase[QuestionNumberCounter].Question = scanner.nextLine();
 

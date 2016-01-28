@@ -1,7 +1,9 @@
 package vda.home.qstquizz;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,16 +27,18 @@ public class TestMainFrameActivity extends AppCompatActivity {
     Boolean ExamTestMode;
     LibGetBaseFromAssets.SingleVariableOfQuestionAndAnswers ThisQuestion;
     int[] QuestionNumberArray = new int[200];
-    final ProgressBar ProgressBarPoint = (ProgressBar) findViewById(R.id.progressBar);
+    static ProgressBar ProgressBarPoint;
+    static SharedPreferences SP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_main_frame);
         FilePath = getIntent().getStringExtra("vda.home.qstquizz.PATH");
-        ExamTestMode = getIntent().getBooleanExtra("vda.home.qstquizz.MODE",false);
-
-        //TODO:Change mode on base of button
+        SP = PreferenceManager.getDefaultSharedPreferences(this);
+        ExamTestMode = SP.getBoolean("test_mode_toggle", false);
+        ProgressBarPoint = (ProgressBar) findViewById(R.id.progressBar);
+        //Mode is changed on base of prefs
         loadBase();
         prepareTestVariant();
 
@@ -43,11 +47,12 @@ public class TestMainFrameActivity extends AppCompatActivity {
 
     private void prepareTestVariant() {
         if (ExamTestMode) {
-            setQuestionNumberTotal(200);
+            int qNT = Integer.parseInt(SP.getString("QuestionNumberInput","200"));
+            setQuestionNumberTotal(qNT);
             int[] QNA = new int[getQuestionNumberCurrent()-1];
             for (int i=0; i<=QNA.length; i++) {QNA[i]=i+1;}
             Collections.shuffle(Arrays.asList(QNA));
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0; i < qNT; i++) {
                 QuestionNumberArray[i] = QNA[i];
             }
         }

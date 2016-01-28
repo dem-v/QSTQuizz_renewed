@@ -1,8 +1,10 @@
 package vda.home.qstquizz;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static public String FilePath;
     static public boolean IS_LOADED_FLAG = false;
     TextView tw;
+    static Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +39,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.starttest).setOnClickListener(this);
         Log.d(LOG_TAG, "Third listener set");
+
+        findViewById(R.id.settings).setOnClickListener(this);
+        Log.d(LOG_TAG, "Settings listener set");
     }
 
     public void sendMessage() {
         // Создаем объект Intent для вызова новой Activity
-        Intent intent = new Intent(MainActivity.this, FileSelectActivity.class);
+        intent = new Intent(MainActivity.this, FileSelectActivity.class);
         // запуск activity
         startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Log.d(LOG_TAG, "FilePath received: " + FilePath);
-            FilePath = data.getStringExtra("vda.home.qstquizz.PATH");
-            tw.setText(FilePath);
-        } else {
-            Log.d(LOG_TAG, "FilePath not set...");
-            tw.setHighlightColor(Color.RED);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Log.d(LOG_TAG, "FilePath received: " + FilePath);
+                    FilePath = data.getStringExtra("vda.home.qstquizz.PATH");
+                    tw.setText(FilePath);
+                } else {
+                    Log.d(LOG_TAG, "FilePath not set...");
+                    tw.setHighlightColor(Color.RED);
+                }
+                break;
+            case 2:
+
         }
     }
 
@@ -104,15 +116,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.starttest:
                 Log.d(LOG_TAG, "Starting test...");
                 try {
-                    Intent intent = new Intent(MainActivity.this, TestMainFrameActivity.class);
+                    intent = new Intent(MainActivity.this, TestMainFrameActivity.class);
                     intent.putExtra("vda.home.qstquizz.PATH", FilePath);
-                    intent.putExtra("vda.home.qstquizz.MODE", findViewById(R.id.testmodetoggle).isEnabled());
                     startActivity(intent);
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
                     e.printStackTrace();
                 }
                 break;
+            case R.id.settings:
+                Log.d(LOG_TAG, "Creating settings...");
+                try {
+                    intent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
         }
     }
 }

@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="test_mode_toggle"
+        android:title="@string/pref_title_test_mode"
+        android:switchTextOff="@string/pref_title_test_mode_off"
+        android:switchTextOn="@string/pref_title_test_mode_on"
+        />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_QNI"
+        android:dependency="test_mode_toggle"
+        android:inputType="text"
+        android:digits="0,1,2,3,4,5,6,7,8,9"
+        android:hint="Only digits allowed"
+        android:key="QuestionNumberInput"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_QNI" />
+
+    <!-- TODO:Create Booklet Generator mechanism and prefs-->
+</PreferenceScreen>

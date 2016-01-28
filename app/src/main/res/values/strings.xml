@@ -1,11 +1,10 @@
 <resources>
-    <string name="app_name">QSTQuizz_2</string>
-    <string name="title_activity_main">QSTQuizz_2_MainActivity</string>
+    <string name="app_name">QSTQuizz</string>
+    <string name="title_activity_main">QSTQuizz_MainActivity</string>
     <string name="starttest">Начать тест</string>
     <string name="baseselect">Выбрать файл базы</string>
     <string name="noFileSelectedMsg">ФАЙЛ НЕ ВЫБРАН!!!</string>
-    <string name="testmodetoggle_on">Режим экзамена</string>
-    <string name="testmodetoggle_off">Режим обучения</string>
+    <string name="settings_text">Настройки</string>
     <string name="exit">Выход</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_file_select">FileSelectActivity</string>
@@ -13,4 +12,73 @@
     <string name="title_activity_test_main_frame">TestMainFrameActivity</string>
     <string name="textview">TextView</string>
     <string name="ProgressTextValue">0/0</string>
+    <string name="title_activity_settings">Настройки</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_header_general">Настройки режима обучения</string>
+
+    <string name="pref_title_test_mode">Выбор режима тестирования</string>
+    <string name="pref_title_test_mode_off">Режим обучения</string>
+    <string name="pref_title_test_mode_on">Режим экзамена</string>
+
+    <string name="pref_default_QNI">200</string>
+    <string name="pref_title_QNI">Количество вопросов в тесте</string>
+
+    <string name="pref_header_test_mode_options">Настройки режима тестирования</string>
+    <!-- TODO:strings for Booklet Creator-->
+    <!-- Example General settings -->
+
+
+    <!--<string name="pref_title_social_recommendations">Enable social recommendations</string>-->
+    <!--<string name="pref_description_social_recommendations">Recommendations for people to contact-->
+        <!--based on your message history-->
+    <!--</string>-->
+
+    <!--<string name="pref_title_display_name">Display name</string>-->
+    <!--<string name="pref_default_display_name">John Smith</string>-->
+
+    <!--<string name="pref_title_add_friends_to_messages">Add friends to messages</string>-->
+    <!--<string-array name="pref_example_list_titles">-->
+        <!--<item>Always</item>-->
+        <!--<item>When possible</item>-->
+        <!--<item>Never</item>-->
+    <!--</string-array>-->
+    <!--<string-array name="pref_example_list_values">-->
+        <!--<item>1</item>-->
+        <!--<item>0</item>-->
+        <!--<item>-1</item>-->
+    <!--</string-array>-->
+
+    <!--&lt;!&ndash; Example settings for Data & Sync &ndash;&gt;-->
+    <!--<string name="pref_header_data_sync">Data &amp; sync</string>-->
+
+    <!--<string name="pref_title_sync_frequency">Sync frequency</string>-->
+    <!--<string-array name="pref_sync_frequency_titles">-->
+        <!--<item>15 minutes</item>-->
+        <!--<item>30 minutes</item>-->
+        <!--<item>1 hour</item>-->
+        <!--<item>3 hours</item>-->
+        <!--<item>6 hours</item>-->
+        <!--<item>Never</item>-->
+    <!--</string-array>-->
+    <!--<string-array name="pref_sync_frequency_values">-->
+        <!--<item>15</item>-->
+        <!--<item>30</item>-->
+        <!--<item>60</item>-->
+        <!--<item>180</item>-->
+        <!--<item>360</item>-->
+        <!--<item>-1</item>-->
+    <!--</string-array>-->
+
+    <!--<string name="pref_title_system_sync_settings">System sync settings</string>-->
+
+    <!--&lt;!&ndash; Example settings for Notifications &ndash;&gt;-->
+    <!--<string name="pref_header_notifications">Notifications</string>-->
+
+    <!--<string name="pref_title_new_message_notifications">New message notifications</string>-->
+
+    <!--<string name="pref_title_ringtone">Ringtone</string>-->
+    <!--<string name="pref_ringtone_silent">Silent</string>-->
+
+    <!--<string name="pref_title_vibrate">Vibrate</string>-->
 </resources>
