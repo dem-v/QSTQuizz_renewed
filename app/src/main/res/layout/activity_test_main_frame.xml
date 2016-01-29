@@ -34,12 +34,15 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/answersListView"
         android:layout_below="@+id/scrollView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:choiceMode="singleChoice"
-        style="@style/Widget.AppCompat.ListView" />
+        style="@style/Widget.AppCompat.ListView"
+        android:longClickable="true"
+        android:clickable="true"
+        android:drawSelectorOnTop="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,5 +55,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/goToQuestionNumber"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:editable="false"
+        android:enabled="true" />
 
 </RelativeLayout>

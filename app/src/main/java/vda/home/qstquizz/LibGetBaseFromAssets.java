@@ -3,8 +3,10 @@ package vda.home.qstquizz;
 import android.app.Activity;
 import android.content.res.AssetManager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -43,22 +45,23 @@ public class LibGetBaseFromAssets {
     }
 
     public static void setTestBase(String FilePath, Activity activity) throws IOException {
+        TestBase = new SingleVariableOfQuestionAndAnswers[100000];
         final AssetManager am = activity.getAssets();
         InputStream inp = am.open(FilePath);
-        Scanner scanner = new Scanner(inp);
+        BufferedReader br = new BufferedReader(new InputStreamReader(inp));
 
-        temp = scanner.next("/r/n"); //TODO:Type mismatch here
+        temp = br.readLine();
         QuestionNumberCounter++;
-        TestBase[QuestionNumberCounter].Question = scanner.nextLine();
+        TestBase[QuestionNumberCounter].Question = br.readLine(); //TODO:NullPointer
 
-        while (scanner.hasNextLine()) {
-            strtmp = scanner.nextLine();//1st
+        do {
+            strtmp = br.readLine();//1st
             if (strtmp.charAt(0) == '+') {
                 TestBase[QuestionNumberCounter].CorrectAnswer[0] = true;
             }
             TestBase[QuestionNumberCounter].Answer[0] = strtmp.substring(1);
 
-            strtmp = scanner.nextLine();//2nd
+            strtmp = br.readLine();//2nd
             if (strtmp.charAt(0) != '?') {
                 if (strtmp.charAt(0) == '+') {
                     TestBase[QuestionNumberCounter].CorrectAnswer[1] = true;
@@ -66,11 +69,11 @@ public class LibGetBaseFromAssets {
                 TestBase[QuestionNumberCounter].Answer[1] = strtmp.substring(1);
             } else {
                 QuestionNumberCounter++;
-                TestBase[QuestionNumberCounter].Question = scanner.nextLine();
+                TestBase[QuestionNumberCounter].Question = br.readLine();
                 continue;
             }
 
-            strtmp = scanner.nextLine();//3rd
+            strtmp = br.readLine();//3rd
             if (strtmp.charAt(0) != '?') {
                 if (strtmp.charAt(0) == '+') {
                     TestBase[QuestionNumberCounter].CorrectAnswer[2] = true;
@@ -78,11 +81,11 @@ public class LibGetBaseFromAssets {
                 TestBase[QuestionNumberCounter].Answer[2] = strtmp.substring(1);
             } else {
                 QuestionNumberCounter++;
-                TestBase[QuestionNumberCounter].Question = scanner.nextLine();
+                TestBase[QuestionNumberCounter].Question = br.readLine();
                 continue;
             }
 
-            strtmp = scanner.nextLine();//4th
+            strtmp = br.readLine();//4th
             if (strtmp.charAt(0) != '?') {
                 if (strtmp.charAt(0) == '+') {
                     TestBase[QuestionNumberCounter].CorrectAnswer[3] = true;
@@ -90,11 +93,11 @@ public class LibGetBaseFromAssets {
                 TestBase[QuestionNumberCounter].Answer[3] = strtmp.substring(1);
             } else {
                 QuestionNumberCounter++;
-                TestBase[QuestionNumberCounter].Question = scanner.nextLine();
+                TestBase[QuestionNumberCounter].Question = br.readLine();
                 continue;
             }
 
-            strtmp = scanner.nextLine();//5th
+            strtmp = br.readLine();//5th
             if (strtmp.charAt(0) != '?') {
                 if (strtmp.charAt(0) == '+') {
                     TestBase[QuestionNumberCounter].CorrectAnswer[4] = true;
@@ -102,29 +105,35 @@ public class LibGetBaseFromAssets {
                 TestBase[QuestionNumberCounter].Answer[4] = strtmp.substring(1);
             } else {
                 QuestionNumberCounter++;
-                TestBase[QuestionNumberCounter].Question = scanner.nextLine();
+                TestBase[QuestionNumberCounter].Question = br.readLine();
                 continue;
             }
 
-            if (scanner.hasNext()) {
+            strtmp = br.readLine();
+            if (strtmp!=null) {
                 QuestionNumberCounter++;
-                TestBase[QuestionNumberCounter].Question = scanner.nextLine();
+                TestBase[QuestionNumberCounter].Question = br.readLine();
             }
         }
+        while (strtmp!=null);
         QuestionNumberTotal = QuestionNumberCounter;
     }
 
-    public boolean CheckAnswer(int AnswerID)
+    public static boolean checkAnswer(int AnswerID)
     {
         return TestBase[QuestionNumberCurrent].CorrectAnswer[AnswerID];
     }
 
-    public SingleVariableOfQuestionAndAnswers getBaseElement() {
+    public static SingleVariableOfQuestionAndAnswers getBaseElement() {
 //        get current
         return TestBase[QuestionNumberCurrent];
     }
 
-    public SingleVariableOfQuestionAndAnswers getBaseElement(int ElementID) {
+    public static void increaseCurrentQuestionNumber() {
+        QuestionNumberCounter++;
+    }
+
+    public static SingleVariableOfQuestionAndAnswers getBaseElement(int ElementID) {
 //        get by Id
         return TestBase[ElementID];
     }

@@ -5,19 +5,30 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-import vda.home.qstquizz.LibGetBaseFromAssets;
-
+import static vda.home.qstquizz.LibGetBaseFromAssets.checkAnswer;
+import static vda.home.qstquizz.LibGetBaseFromAssets.getBaseElement;
 import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionNumberCurrent;
+import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionNumberTotal;
+import static vda.home.qstquizz.LibGetBaseFromAssets.increaseCurrentQuestionNumber;
+import static vda.home.qstquizz.LibGetBaseFromAssets.setQuestionNumberCurrent;
 import static vda.home.qstquizz.LibGetBaseFromAssets.setQuestionNumberTotal;
 import static vda.home.qstquizz.LibGetBaseFromAssets.setTestBase;
 
@@ -29,6 +40,11 @@ public class TestMainFrameActivity extends AppCompatActivity {
     int[] QuestionNumberArray = new int[200];
     static ProgressBar ProgressBarPoint;
     static SharedPreferences SP;
+    static EditText GoTo;
+    static ListView AnswersListView;
+    static int AnswerID;
+    static ArrayAdapter<String> adapter;
+    static boolean doubleClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,27 +54,56 @@ public class TestMainFrameActivity extends AppCompatActivity {
         SP = PreferenceManager.getDefaultSharedPreferences(this);
         ExamTestMode = SP.getBoolean("test_mode_toggle", false);
         ProgressBarPoint = (ProgressBar) findViewById(R.id.progressBar);
+        GoTo = (EditText) findViewById(R.id.goToQuestionNumber);
+        AnswersListView = (ListView) findViewById(R.id.answersListView);
+        AnswersListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!checkAnswer(position)) {
+                    Toast.makeText(getApplicationContext(), "Неправильный ответ, попробуйте ещё раз", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Верно!", Toast.LENGTH_SHORT).show();
+                    updateThisViewWithQuestion();
+                }
+                return false;
+            }
+        });
+        if (!ExamTestMode) {
+            registerForContextMenu(ProgressBarPoint);
+        }
         //Mode is changed on base of prefs
         loadBase();
         prepareTestVariant();
+        updateThisViewWithQuestion(getQuestionNumberCurrent());
 
+    }
 
+    private void updateThisViewWithQuestion() {
+        ThisQuestion = getBaseElement();
+        increaseCurrentQuestionNumber();
+    }
+
+    private void updateThisViewWithQuestion(int questionNumberCurrent) {
+        ThisQuestion = getBaseElement(questionNumberCurrent);
+        setQuestionNumberCurrent(questionNumberCurrent++);
     }
 
     private void prepareTestVariant() {
         if (ExamTestMode) {
-            int qNT = Integer.parseInt(SP.getString("QuestionNumberInput","200"));
+            int qNT = Integer.parseInt(SP.getString("QuestionNumberInput", "200"));
             setQuestionNumberTotal(qNT);
-            int[] QNA = new int[getQuestionNumberCurrent()-1];
-            for (int i=0; i<=QNA.length; i++) {QNA[i]=i+1;}
+            int[] QNA = new int[getQuestionNumberCurrent() - 1];
+            for (int i = 0; i <= QNA.length; i++) {
+                QNA[i] = i + 1;
+            }
             Collections.shuffle(Arrays.asList(QNA));
             for (int i = 0; i < qNT; i++) {
                 QuestionNumberArray[i] = QNA[i];
             }
-        }
-        else
-        {
-
+        } else {
+            for (int i = 0; i < getQuestionNumberTotal(); i++) {
+                QuestionNumberArray[i] = i + 1;
+            }
         }
     }
 
@@ -91,4 +136,22 @@ public class TestMainFrameActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        GoTo.setVisibility(View.VISIBLE);
+        GoTo.setSelected(true);
+    }
+
+    @Override
+    public void onContextMenuClosed(Menu menu) {
+        super.onContextMenuClosed(menu);
+        GoTo.setSelected(false);
+        GoTo.setVisibility(View.GONE);
+        updateThisViewWithQuestion(Integer.parseInt(GoTo.getText().toString()));
+    }
+
+
 }
