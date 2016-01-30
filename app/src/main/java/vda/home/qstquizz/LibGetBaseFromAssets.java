@@ -19,11 +19,18 @@ public class LibGetBaseFromAssets {
     private static int QuestionNumberCounter =0;
     private static String temp,strtmp;
 
-    public class SingleVariableOfQuestionAndAnswers
+//    TODO:Create db instead of class!
+
+    static class SingleVariableOfQuestionAndAnswers
     {
-        String Question = "";
-        String[] Answer = new String[4];
-        Boolean[] CorrectAnswer = new Boolean[4];
+        String Question;
+        String[] Answer;
+        Boolean[] CorrectAnswer;
+        public SingleVariableOfQuestionAndAnswers() {
+            Question = new String("");
+            Answer = new String[4];
+            CorrectAnswer = new Boolean[4];
+        }
     }
 
     public static SingleVariableOfQuestionAndAnswers[] TestBase;
