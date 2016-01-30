@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    static final String LOG_TAG = MainActivity.class.getSimpleName();
     static public String FilePath;
     static public boolean IS_LOADED_FLAG = false;
     TextView tw;
@@ -102,7 +102,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.exit:
-                Log.d(LOG_TAG, "Exiting on user request...");
+                Log.d(LOG_TAG, "Deleting test db file. Exiting on user request...");
+                LibGetBaseFromAssets.db.delete("testdb",null,null);
                 finish();
                 break;
             case R.id.baseselect:

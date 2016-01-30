@@ -1,5 +1,6 @@
 package vda.home.qstquizz;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -23,8 +24,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
+import vda.home.qstquizz.LibGetBaseFromAssets.DBHelper;
+
 import static vda.home.qstquizz.LibGetBaseFromAssets.checkAnswer;
-import static vda.home.qstquizz.LibGetBaseFromAssets.getBaseElement;
+import static vda.home.qstquizz.LibGetBaseFromAssets.getAnswersArrayByElementID;
+import static vda.home.qstquizz.LibGetBaseFromAssets.getAnswersArrayCurrent;
+import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionByElementID;
+import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionCurrent;
 import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionNumberCurrent;
 import static vda.home.qstquizz.LibGetBaseFromAssets.getQuestionNumberTotal;
 import static vda.home.qstquizz.LibGetBaseFromAssets.increaseCurrentQuestionNumber;
@@ -36,8 +42,9 @@ public class TestMainFrameActivity extends AppCompatActivity {
 
     String FilePath;
     Boolean ExamTestMode;
-    LibGetBaseFromAssets.SingleVariableOfQuestionAndAnswers ThisQuestion;
-    int[] QuestionNumberArray = new int[200];
+    static String CurrentQuestion;
+    static String[] CurrentAnswers;
+    int[] QuestionNumberArray;
     static ProgressBar ProgressBarPoint;
     static SharedPreferences SP;
     static EditText GoTo;
@@ -45,11 +52,15 @@ public class TestMainFrameActivity extends AppCompatActivity {
     static int AnswerID;
     static ArrayAdapter<String> adapter;
     static boolean doubleClick = false;
+    static LibGetBaseFromAssets.DBHelper testBaseDB;
+    static LibGetBaseFromAssets.DBHelper userStatsDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_main_frame);
+        Context context = this.getApplicationContext();
+        testBaseDB = new DBHelper(context, "testdb", null, 1);
         FilePath = getIntent().getStringExtra("vda.home.qstquizz.PATH");
         SP = PreferenceManager.getDefaultSharedPreferences(this);
         ExamTestMode = SP.getBoolean("test_mode_toggle", false);
@@ -79,12 +90,14 @@ public class TestMainFrameActivity extends AppCompatActivity {
     }
 
     private void updateThisViewWithQuestion() {
-        ThisQuestion = getBaseElement();
+        CurrentQuestion = getQuestionCurrent();
+        CurrentAnswers = getAnswersArrayCurrent();
         increaseCurrentQuestionNumber();
     }
 
     private void updateThisViewWithQuestion(int questionNumberCurrent) {
-        ThisQuestion = getBaseElement(questionNumberCurrent);
+        CurrentQuestion = getQuestionByElementID(questionNumberCurrent);
+        CurrentAnswers = getAnswersArrayByElementID(questionNumberCurrent);
         setQuestionNumberCurrent(questionNumberCurrent++);
     }
 
@@ -92,6 +105,7 @@ public class TestMainFrameActivity extends AppCompatActivity {
         if (ExamTestMode) {
             int qNT = Integer.parseInt(SP.getString("QuestionNumberInput", "200"));
             setQuestionNumberTotal(qNT);
+            QuestionNumberArray = new int[qNT];
             int[] QNA = new int[getQuestionNumberCurrent() - 1];
             for (int i = 0; i <= QNA.length; i++) {
                 QNA[i] = i + 1;
@@ -101,6 +115,7 @@ public class TestMainFrameActivity extends AppCompatActivity {
                 QuestionNumberArray[i] = QNA[i];
             }
         } else {
+            QuestionNumberArray = new int[getQuestionNumberTotal()];
             for (int i = 0; i < getQuestionNumberTotal(); i++) {
                 QuestionNumberArray[i] = i + 1;
             }

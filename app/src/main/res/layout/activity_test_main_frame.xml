@@ -21,51 +21,52 @@
         android:progress="50" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:minHeight="200dp" >
 
     </ScrollView>
 
     <ListView
+        android:id="@+id/answersListView"
+        style="@style/Widget.AppCompat.ListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/answersListView"
-        android:layout_below="@+id/scrollView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/scrollView"
         android:choiceMode="singleChoice"
-        style="@style/Widget.AppCompat.ListView"
-        android:longClickable="true"
         android:clickable="true"
-        android:drawSelectorOnTop="false" />
+        android:drawSelectorOnTop="false"
+        android:longClickable="true" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/ProgressTextValue"
-        android:id="@+id/textView"
-        android:textColor="#fe0101"
-        android:textSize="22sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="@string/ProgressTextValue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#fe0101"
+        android:textSize="22sp" />
 
     <EditText
+        android:id="@+id/goToQuestionNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/goToQuestionNumber"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
+        android:layout_margin="2dp"
         android:editable="false"
-        android:enabled="true" />
+        android:ems="10"
+        android:enabled="true"
+        android:inputType="number"
+        android:visibility="gone" />
 
 </RelativeLayout>
